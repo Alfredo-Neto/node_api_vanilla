@@ -19,9 +19,7 @@ class TaskController {
 	show (req, res) {
 		const { id } = req.params;
 
-		let task = tasks.find(task => {
-			return task.id === id;
-		});
+		let task = this.taskService.findById(id);
 
 		if (!task) {
 			return res.send(404, "Task not found");

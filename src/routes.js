@@ -10,22 +10,22 @@ const routes = [
 	{
 		url: '/tasks/:id',
 		method: 'GET',
-		handler: taskController.show
+		handler: taskController.show.bind(taskController)
 	},
 	{
 		url: '/tasks',
 		method: 'POST',
-		handler: taskController.create
+		handler: taskController.create.bind(taskController)
 	},
 	{
 		url: '/tasks/:id',
 		method: 'PUT',
-		handler: taskController.update
+		handler: taskController.update.bind(taskController)
 	},
 	{
 		url: '/tasks/:id',
 		method: 'DELETE',
-		handler: taskController.remove
+		handler: taskController.remove.bind(taskController)
 	}
 ]
 

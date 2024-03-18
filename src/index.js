@@ -39,7 +39,6 @@ const server = http.createServer(async (req, res) => {
 	if (route) {
 		req.query = queryParams;
 		req.params = { id }
-		console.log({params: req.params});
 
 		route.handler(req, res);
 	} else {

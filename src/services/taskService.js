@@ -6,6 +6,10 @@ class TaskService {
 	findAll(order) {
 		return this.taskRepository.findAll(order);
 	}
+
+	findById(id) {
+		return this.taskRepository.findById(id);
+	}
 }
 
 module.exports = TaskService

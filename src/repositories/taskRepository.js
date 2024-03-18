@@ -1,18 +1,24 @@
 class TaskRepository {
 	constructor({ taskModel }) {
 		this.taskModel = taskModel;
+		this.tasks = this.taskModel.db;
 	}
 
 	findAll(order) {
-		let tasks = this.taskModel.db;
-
+		let allTasks;
 		if (order?.toUpperCase() === "DESC") {
-			tasks = tasks.sort((a, b) => b.createdAt - a.createdAt);
+			allTasks = this.tasks.sort((a, b) => b.createdAt - a.createdAt);
 		} else {
-			tasks = tasks.sort((a, b) => a.createdAt - b.createdAt);
+			allTasks = this.tasks.sort((a, b) => a.createdAt - b.createdAt);
 		}
 
-		return tasks;
+		return allTasks;
+	}
+
+	findById(id) {
+		return this.tasks.find(task => {
+			return task.id === id;
+		});
 	}
 }
 
