@@ -4,17 +4,16 @@ taskEntity = new taskEntity();
 const crypto = require('crypto');
 
 class TaskController {
+
+	constructor({ taskService }) {
+		this.taskService = taskService;
+	}
+
 	index (req, res) {
 		let { order } = req.query;
 
-		let orderedTasks;
-		if (order?.toUpperCase() === "DESC") {
-			orderedTasks = tasks.sort((a, b) => b.createdAt - a.createdAt);
-		} else {
-			orderedTasks = tasks.sort((a, b) => a.createdAt - b.createdAt);
-		}
-
-		res.send(200, { orderedTasks })
+		const orderedTasks = this.taskService.findAll(order);
+		res.send(200, { orderedTasks });
 	}
 
 	show (req, res) {
@@ -78,7 +77,7 @@ class TaskController {
 		res.send(200, { task })
 	}
 
-	delete (req, res) {
+	remove (req, res) {
 		const { id } = req.params;
 
 		let task = tasks.find(task => {

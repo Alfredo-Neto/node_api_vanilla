@@ -1,11 +1,11 @@
-let taskController = require('./controllers/taskController');
-taskController = new taskController();
+const taskFactory = require('./factories/taskFactory');
+const taskController = taskFactory.generateInstance();
 
 const routes = [
 	{
 		url: '/tasks',
 		method: 'GET',
-		handler: taskController.index
+		handler: taskController.index.bind(taskController)
 	},
 	{
 		url: '/tasks/:id',
@@ -25,7 +25,7 @@ const routes = [
 	{
 		url: '/tasks/:id',
 		method: 'DELETE',
-		handler: taskController.delete
+		handler: taskController.remove
 	}
 ]
 
