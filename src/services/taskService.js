@@ -18,7 +18,17 @@ class TaskService {
 		if (verifiedTask.valid) {
 			return this.taskRepository.create(task);
 		}
-		
+
+		return null;
+	}
+
+	update(task, taskUpdate) {
+		const verifiedTask = this.taskEntity.isValid(taskUpdate);
+
+		if (verifiedTask.valid) {
+			return this.taskRepository.update(task, taskUpdate);
+		}
+
 		return null;
 	}
 }

@@ -34,6 +34,23 @@ class TaskRepository {
 
 		return task;
 	}
+
+	update(task, taskUpdate) {
+		let updatedTask = null;
+
+		this.tasks.forEach(taskItem => {
+			if (taskItem.id === task.id) {
+				taskItem.title = taskUpdate.title;
+				taskItem.description = taskUpdate.description;
+				taskItem.updatedAt = new Date();
+
+				updatedTask = taskItem;
+			}
+		});
+
+		return updatedTask;
+	}
+
 }
 
 module.exports = TaskRepository;

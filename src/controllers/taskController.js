@@ -41,27 +41,19 @@ class TaskController {
 		const { id } = req.params;
 		const { title, description } = task;
 
-		task = tasks.find(task => {
-			return task.id === id;
-		});
+		const foundTask = this.taskService.findById(id);
 
-		if (!task) {
+		if (!foundTask) {
 			return res.send(404, "Task not found");
 		}
 
-		const verifiedTask = taskEntity.isValid(task);
+		const updatedTask = this.taskService.update(foundTask, task);
 
-		if (verifiedTask.valid) {
-			tasks.forEach(task => {
-				if(task.id === id) {
-					task.title = title;
-					task.description = description;
-					task.updatedAt = new Date();
-				}
-			});
+		if (updatedTask) {
+			return res.send(200, { updatedTask })
 		}
-
-		res.send(200, { task })
+		
+		res.send(400, { message: "Bad request" });
 	}
 
 	remove (req, res) {
