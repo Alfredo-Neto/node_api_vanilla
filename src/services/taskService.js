@@ -1,6 +1,7 @@
 class TaskService {
-	constructor({ taskRepository }) {
+	constructor({ taskRepository, taskEntity }) {
 		this.taskRepository = taskRepository;
+		this.taskEntity = taskEntity;
 	}
 
 	findAll(order) {
@@ -9,6 +10,16 @@ class TaskService {
 
 	findById(id) {
 		return this.taskRepository.findById(id);
+	}
+
+	create(task) {
+		const verifiedTask = this.taskEntity.isValid(task);
+
+		if (verifiedTask.valid) {
+			return this.taskRepository.create(task);
+		}
+		
+		return null;
 	}
 }
 

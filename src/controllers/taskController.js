@@ -1,8 +1,4 @@
 let tasks = require('../mocks/tasks');
-let taskEntity = require('../entities/task');
-taskEntity = new taskEntity();
-const crypto = require('crypto');
-
 class TaskController {
 
 	constructor({ taskService }) {
@@ -31,20 +27,13 @@ class TaskController {
 	create (req, res) {
 		let { task } = req.body;
 		
-		const verifiedTask = taskEntity.isValid(task);
+		const createdTask = this.taskService.create(task);
 
-		if (verifiedTask.valid) {
-			task = {
-				id: crypto.randomUUID(),
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				...task
-			}
-	
-			tasks.push(task);
+		if (createdTask) {
+			return res.send(201, { message: "created", createdTask});
 		}
 
-		res.send(201, { message: "created", task});
+		res.send(400, { message: "Bad request" });
 	}
 
 	update (req, res) {
