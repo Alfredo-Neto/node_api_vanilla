@@ -31,6 +31,10 @@ class TaskService {
 
 		return null;
 	}
+
+	delete(id) {
+		return this.taskRepository.delete(id);
+	}
 }
 
 module.exports = TaskService

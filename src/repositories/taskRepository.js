@@ -51,6 +51,14 @@ class TaskRepository {
 		return updatedTask;
 	}
 
+	delete(id) {
+		this.tasks.splice(this.tasks.findIndex((task) => {
+			return task.id === id
+		}), 1);
+
+		return this.tasks;
+	}
+
 }
 
 module.exports = TaskRepository;

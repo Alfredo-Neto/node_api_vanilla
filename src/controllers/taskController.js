@@ -9,6 +9,7 @@ class TaskController {
 		let { order } = req.query;
 
 		const orderedTasks = this.taskService.findAll(order);
+		
 		res.send(200, { orderedTasks });
 	}
 
@@ -39,7 +40,6 @@ class TaskController {
 	update (req, res) {
 		let { task } = req.body;
 		const { id } = req.params;
-		const { title, description } = task;
 
 		const foundTask = this.taskService.findById(id);
 
@@ -59,17 +59,13 @@ class TaskController {
 	remove (req, res) {
 		const { id } = req.params;
 
-		let task = tasks.find(task => {
-			return task.id === id;
-		});
+		const foundTask = this.taskService.findById(id);
 
-		if (!task) {
+		if (!foundTask) {
 			return res.send(404, "Task not found");
 		}
 
-		tasks.splice(tasks.findIndex((task) => {
-			return task.id === id
-		}), 1);
+		const tasks = this.taskService.delete(id);
 		
 		res.send(200, { tasks });
 	}
